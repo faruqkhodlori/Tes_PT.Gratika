@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Letter Count and Sort</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+        background: #f9f9f9;
+        color: #333;
+      }
+      h1 {
+        color: #007acc;
+      }
+      label,
+      input,
+      button {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+      }
+      #result {
+        margin-top: 1rem;
+        background: #eee;
+        padding: 1rem;
+        border-radius: 5px;
+        white-space: pre-wrap;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Letter Count and Sort</h1>
+    <label for="inputText">Enter letters:</label><br />
+    <input type="text" id="inputText" maxlength="100" />
+    <button id="countBtn">Count and Sort</button>
+
+    <div id="result"></div>
+
+    <script>
+      function countAndSortLetters(input) {
+        const counts = {};
+        for (const char of input) {
+          if (/[a-zA-Z]/.test(char)) {
+            counts[char] = (counts[char] || 0) + 1;
+          }
+        }
+        // Sort keys alphabetically, uppercase and lowercase separated by default in JS
+        const sortedKeys = Object.keys(counts).sort((a, b) => {
+          // Sort uppercase letters before lowercase letters
+          if (a.toLowerCase() === b.toLowerCase()) {
+            return a < b ? -1 : 1;
+          }
+          return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
+        });
+
+        let resultStr = "";
+        for (const key of sortedKeys) {
+          resultStr += `${key}: ${counts[key]}\n`;
+        }
+        return resultStr;
+      }
+
+      document.getElementById("countBtn").addEventListener("click", () => {
+        const input = document.getElementById("inputText").value;
+        const result = countAndSortLetters(input);
+        document.getElementById("result").textContent =
+          result || "No letters entered.";
+      });
+    </script>
+  </body>
+</html>

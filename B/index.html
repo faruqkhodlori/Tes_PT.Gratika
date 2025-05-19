@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pattern Count Function</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+        background: #f9f9f9;
+        color: #333;
+      }
+      h1 {
+        color: #007acc;
+      }
+      pre {
+        background: #eee;
+        padding: 1rem;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pattern Count Function Demo</h1>
+    <div id="results"></div>
+
+    <script>
+      /**
+       * Counts how many times the pattern appears in the text.
+       * Both text and pattern can be strings or arrays of characters.
+       * Returns 0 if pattern is empty or longer than text.
+       * Does not use built-in substring count or regex matching length.
+       * @param {string|Array} text
+       * @param {string|Array} pattern
+       * @returns {number}
+       */
+      function pattern_count(text, pattern) {
+        if (!text || !pattern) return 0;
+        const textLength = text.length;
+        const patternLength = pattern.length;
+        if (patternLength === 0 || patternLength > textLength) return 0;
+
+        let count = 0;
+        for (let i = 0; i <= textLength - patternLength; i++) {
+          let match = true;
+          for (let j = 0; j < patternLength; j++) {
+            if (text[i + j] !== pattern[j]) {
+              match = false;
+              break;
+            }
+          }
+          if (match) count++;
+        }
+        return count;
+      }
+
+      // Test cases from user
+      const testCases = [
+        { text: "palindrom", pattern: "ind", expected: 1 },
+        { text: "abakadabra", pattern: "ab", expected: 2 },
+        { text: "bimsalabim", pattern: "bim", expected: 2 },
+        { text: "aaaaaa", pattern: "aa", expected: 5 },
+        { text: "hello", pattern: "", expected: 0 },
+        { text: "hell", pattern: "hello", expected: 0 },
+      ];
+
+      const resultsDiv = document.getElementById("results");
+      testCases.forEach(({ text, pattern, expected }, index) => {
+        const result = pattern_count(text, pattern);
+        const passFail = result === expected ? "PASS" : "FAIL";
+        const pre = document.createElement("pre");
+        pre.textContent = `Test case ${index + 1}:
+Text: "${text}"
+Pattern: "${pattern}"
+Expected: ${expected}
+Result: ${result}
+Status: ${passFail}
+`;
+        resultsDiv.appendChild(pre);
+      });
+    </script>
+  </body>
+</html>

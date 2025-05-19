@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sort Array: Letters first, numbers next</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f0f4f8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        color: #333;
+      }
+      h1 {
+        font-weight: 700;
+        color: #007acc;
+        margin-bottom: 1rem;
+      }
+      .container {
+        background: white;
+        padding: 20px 30px;
+        border-radius: 8px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        width: 320px;
+        text-align: center;
+      }
+      .array-display {
+        font-size: 1.2rem;
+        color: #254e6f;
+        margin-top: 1rem;
+        user-select: all;
+        font-weight: 600;
+      }
+      footer {
+        margin-top: 2rem;
+        font-size: 0.85rem;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sorted Array</h1>
+      <div><strong>Original Array:</strong></div>
+      <div class="array-display" id="original"></div>
+      <div><strong>Sorted Array:</strong></div>
+      <div class="array-display" id="sorted"></div>
+    </div>
+    <footer>Letters first (alphabetical), Numbers second (ascending)</footer>
+
+    <script>
+      (function () {
+        const arr = [12, 9, 30, "A", "M", 99, 82, "J", "N", "B"];
+
+        // Display original array as string
+        document.getElementById("original").textContent = JSON.stringify(arr);
+
+        // Separate letters and numbers
+        const letters = arr
+          .filter((v) => typeof v === "string")
+          .sort((a, b) => a.localeCompare(b));
+        const numbers = arr
+          .filter((v) => typeof v === "number")
+          .sort((a, b) => a - b);
+
+        // Combine letters then numbers
+        const sorted = [...letters, ...numbers];
+
+        // Display sorted array as string
+        document.getElementById("sorted").textContent = JSON.stringify(sorted);
+      })();
+    </script>
+  </body>
+</html>
